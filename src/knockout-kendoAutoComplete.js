@@ -1,7 +1,16 @@
 createBinding({
     name: "kendoAutoComplete",
     events: {
-        change: VALUE,
+        change: function (options, event) {
+            var widget = event.sender,
+                valuePrimitive = widget.options.valuePrimitive;
+
+            if (valuePrimitive) {
+                options.value(widget.value());
+            } else {
+                options.value(widget.dataItems());
+            }
+        },
         open: {
             writeTo: ISOPEN,
             value: true

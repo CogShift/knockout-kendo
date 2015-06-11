@@ -390,7 +390,16 @@ var CLICK = "click",
 createBinding({
     name: "kendoAutoComplete",
     events: {
-        change: VALUE,
+        change: function (options, event) {
+            var widget = event.sender,
+                valuePrimitive = widget.options.valuePrimitive;
+
+            if (valuePrimitive) {
+                options.value(widget.value());
+            } else {
+                options.value(widget.dataItems());
+            }
+        },
         open: {
             writeTo: ISOPEN,
             value: true
@@ -460,7 +469,16 @@ createBinding({
 createBinding({
     name: "kendoComboBox",
     events: {
-        change: VALUE,
+        change: function (options, event) {
+            var widget = event.sender,
+                valuePrimitive = widget.options.valuePrimitive;
+
+            if (valuePrimitive) {
+                options.value(widget.value());
+            } else {
+                options.value(widget.dataItems());
+            }
+        },
         open: {
             writeTo: ISOPEN,
             value: true
@@ -531,7 +549,16 @@ createBinding({
 createBinding({
     name: "kendoDropDownList",
     events: {
-        change: VALUE,
+        change: function (options, event) {
+            var widget = event.sender,
+                valuePrimitive = widget.options.valuePrimitive;
+
+            if (valuePrimitive) {
+                options.value(widget.value());
+            } else {
+                options.value(widget.dataItems());
+            }
+        },
         open: {
             writeTo: ISOPEN,
             value: true
@@ -858,7 +885,16 @@ createBinding({
 createBinding({
     name: "kendoMultiSelect",
     events: {
-        change: VALUE,
+        change: function (options, event) {
+            var widget = event.sender,
+                valuePrimitive = widget.options.valuePrimitive;
+
+            if (valuePrimitive) {
+                options.value(widget.value());
+            } else {
+                options.value(widget.dataItems());
+            }
+        },
         open: {
             writeTo: ISOPEN,
             value: true
