@@ -5,10 +5,12 @@ createBinding({
             var widget = event.sender,
                 valuePrimitive = widget.options.valuePrimitive;
 
-            if (valuePrimitive) {
-                options.value(widget.value());
-            } else {
-                options.value(widget.dataItems());
+            if (options.value) {
+                if (valuePrimitive) {
+                    options.value(widget.value());
+                } else {
+                    options.value(widget.dataItems ? widget.dataItems() : widget.dataItem());
+                }
             }
         },
         open: {
@@ -31,6 +33,19 @@ createBinding({
                 this.select(0);
             }
         },
-        value: VALUE
+        value: function (value) {
+            var widget = this,
+                dataValueField = widget.options.dataValueField;
+
+            if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
+                value = $.map(value, function(item) {
+                    return item !== null && item[dataValueField] !== undefined ? item[dataValueField] : item;
+                });
+            } else if (typeof value === "object" && value !== null && value[dataValueField] !== undefined) {
+                value = value[dataValueField];
+            }
+
+            widget.value(value);
+        }
     }
 });
