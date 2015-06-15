@@ -28,19 +28,21 @@ createBinding({
         data: function(value) {
             ko.kendo.setDataSource(this, value);
         },
-        value: function (value) {
+        value: function(value) {
             var widget = this,
                 dataValueField = widget.options.dataValueField;
 
+            value = ko.utils.unwrapObservable(value);
+
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
-                    return item !== null && item[dataValueField] !== undefined ? item[dataValueField] : item;
+                    return getDataValueField(item, dataValueField);
                 });
-            } else if (typeof value === "object" && value !== null && value[dataValueField] !== undefined) {
-                value = value[dataValueField];
+            } else {
+                value = getDataValueField(value, dataValueField);
             }
 
             widget.value(value);
-        }
+        } 
     }
 });

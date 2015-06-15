@@ -73,6 +73,8 @@
 
 //import "knockout-kendoMultiSelect.js"
 
+//import "knockout-kendoSingleSelect.js"
+
 //import "knockout-kendoNotification.js"
 
 //import "knockout-kendoNumericTextBox.js"

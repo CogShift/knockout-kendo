@@ -340,6 +340,16 @@ var openIfVisible = function(value, options) {
     }
 };
 
+var getDataValueField = function (item, dataValueField) {
+    item = ko.utils.unwrapObservable(item);
+
+    if (!item || item[dataValueField] === undefined) {
+        return item;
+    }
+
+    return ko.utils.unwrapObservable(item[dataValueField]);
+};
+
 
 //library is in a closure, use this private variable to reduce size of minified file
 var createBinding = ko.kendo.bindingFactory.createBinding.bind(ko.kendo.bindingFactory);
@@ -417,20 +427,22 @@ createBinding({
         data: function(value) {
             ko.kendo.setDataSource(this, value);
         },
-        value: function (value) {
+        value: function(value) {
             var widget = this,
                 dataValueField = widget.options.dataValueField;
 
+            value = ko.utils.unwrapObservable(value);
+
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
-                    return item !== null && item[dataValueField] !== undefined ? item[dataValueField] : item;
+                    return getDataValueField(item, dataValueField);
                 });
-            } else if (typeof value === "object" && value !== null && value[dataValueField] !== undefined) {
-                value = value[dataValueField];
+            } else {
+                value = getDataValueField(value, dataValueField);
             }
 
             widget.value(value);
-        }
+        } 
     }
 });
 
@@ -511,20 +523,22 @@ createBinding({
         data: function(value) {
             ko.kendo.setDataSource(this, value);
         },
-        value: function (value) {
+        value: function(value) {
             var widget = this,
                 dataValueField = widget.options.dataValueField;
 
+            value = ko.utils.unwrapObservable(value);
+
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
-                    return item !== null && item[dataValueField] !== undefined ? item[dataValueField] : item;
+                    return getDataValueField(item, dataValueField);
                 });
-            } else if (typeof value === "object" && value !== null && value[dataValueField] !== undefined) {
-                value = value[dataValueField];
+            } else {
+                value = getDataValueField(value, dataValueField);
             }
 
             widget.value(value);
-        }
+        } 
     }
 });
 
@@ -611,20 +625,22 @@ createBinding({
                 this.select(0);
             }
         },
-        value: function (value) {
+        value: function(value) {
             var widget = this,
                 dataValueField = widget.options.dataValueField;
 
+            value = ko.utils.unwrapObservable(value);
+
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
-                    return item !== null && item[dataValueField] !== undefined ? item[dataValueField] : item;
+                    return getDataValueField(item, dataValueField);
                 });
-            } else if (typeof value === "object" && value !== null && value[dataValueField] !== undefined) {
-                value = value[dataValueField];
+            } else {
+                value = getDataValueField(value, dataValueField);
             }
 
             widget.value(value);
-        }
+        } 
     }
 });
 
@@ -930,7 +946,7 @@ createBinding({
 createBinding({
     name: "kendoMultiSelect",
     events: {
-        change: function (options, event) {
+        change: function(options, event) {
             var widget = event.sender,
                 valuePrimitive = widget.options.valuePrimitive;
 
@@ -957,21 +973,70 @@ createBinding({
         data: function(value) {
             ko.kendo.setDataSource(this, value);
         },
-        value: function (value) {
+        value: function(value) {
             var widget = this,
                 dataValueField = widget.options.dataValueField;
 
+            value = ko.utils.unwrapObservable(value);
+
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
-                    return item !== null && item[dataValueField] !== undefined ? item[dataValueField] : item;
+                    return getDataValueField(item, dataValueField);
                 });
-            } else if (typeof value === "object" && value !== null && value[dataValueField] !== undefined) {
-                value = value[dataValueField];
+            } else {
+                value = getDataValueField(value, dataValueField);
             }
 
             widget.value(value);
         }
     }
+});
+
+createBinding({
+	name: "kendoSingleSelect",
+	events: {
+		change: function(options, event) {
+			var widget = event.sender,
+				valuePrimitive = widget.options.valuePrimitive;
+
+			if (options.value) {
+				if (valuePrimitive) {
+					options.value(widget.value());
+				} else {
+					options.value(widget.dataItems ? widget.dataItems() : widget.dataItem());
+				}
+			}
+		},
+		open: {
+			writeTo: ISOPEN,
+			value: true
+		},
+		close: {
+			writeTo: ISOPEN,
+			value: false
+		}
+	},
+	watch: {
+		enabled: ENABLE,
+		search: [SEARCH, CLOSE],
+		data: function(value) {
+			ko.kendo.setDataSource(this, value);
+		},
+		value: function(value) {
+			var widget = this,
+				dataValueField = widget.options.dataValueField;
+
+			if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
+				value = $.map(value, function(item) {
+					return item !== null && item[dataValueField] !== undefined ? item[dataValueField] : item;
+				});
+			} else if (typeof value === "object" && value !== null && value[dataValueField] !== undefined) {
+				value = value[dataValueField];
+			}
+
+			widget.value(value);
+		}
+	}
 });
 
 var notificationHandler = function(type, value) {

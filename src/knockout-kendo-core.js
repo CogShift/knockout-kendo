@@ -310,3 +310,13 @@ var openIfVisible = function(value, options) {
         this.open(typeof options.target === "string" ? $(unwrap(options.target)) : options.target);
     }
 };
+
+var getDataValueField = function (item, dataValueField) {
+    item = ko.utils.unwrapObservable(item);
+
+    if (!item || item[dataValueField] === undefined) {
+        return item;
+    }
+
+    return ko.utils.unwrapObservable(item[dataValueField]);
+};
