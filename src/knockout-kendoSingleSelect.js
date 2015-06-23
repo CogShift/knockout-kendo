@@ -9,7 +9,7 @@ createBinding({
 				if (valuePrimitive) {
 					options.value(widget.value());
 				} else {
-					options.value(widget.dataItems ? widget.dataItems() : widget.dataItem());
+					options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
 				}
 			}
 		},
