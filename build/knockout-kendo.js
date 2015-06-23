@@ -351,6 +351,7 @@ var getDataValueField = function (item, dataValueField) {
 };
 
 
+
 //library is in a closure, use this private variable to reduce size of minified file
 var createBinding = ko.kendo.bindingFactory.createBinding.bind(ko.kendo.bindingFactory);
 
@@ -408,7 +409,7 @@ createBinding({
                 if (valuePrimitive) {
                     options.value(widget.value());
                 } else {
-                    options.value(widget.dataItems ? widget.dataItems() : widget.dataItem());
+                    options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
                 }
             }
         },
@@ -504,7 +505,7 @@ createBinding({
                 if (valuePrimitive) {
                     options.value(widget.value());
                 } else {
-                    options.value(widget.dataItems ? widget.dataItems() : widget.dataItem());
+                    options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
                 }
             }
         },
@@ -601,7 +602,7 @@ createBinding({
                 if (valuePrimitive) {
                     options.value(widget.value());
                 } else {
-                    options.value(widget.dataItems ? widget.dataItems() : widget.dataItem());
+                    options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
                 }
             }
         },
@@ -954,7 +955,7 @@ createBinding({
                 if (valuePrimitive) {
                     options.value(widget.value());
                 } else {
-                    options.value(widget.dataItems ? widget.dataItems() : widget.dataItem());
+                    options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
                 }
             }
         },
@@ -1003,7 +1004,7 @@ createBinding({
 				if (valuePrimitive) {
 					options.value(widget.value());
 				} else {
-					options.value(widget.dataItems ? widget.dataItems() : widget.dataItem());
+					options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
 				}
 			}
 		},
