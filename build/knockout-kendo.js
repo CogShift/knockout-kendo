@@ -409,7 +409,7 @@ createBinding({
                 if (valuePrimitive) {
                     options.value(widget.value());
                 } else {
-                    options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
+                    options.value(widget.dataItem());
                 }
             }
         },
@@ -505,7 +505,7 @@ createBinding({
                 if (valuePrimitive) {
                     options.value(widget.value());
                 } else {
-                    options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
+                    options.value(widget.dataItem());
                 }
             }
         },
@@ -602,7 +602,7 @@ createBinding({
                 if (valuePrimitive) {
                     options.value(widget.value());
                 } else {
-                    options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
+                    options.value(widget.dataItem());
                 }
             }
         },
@@ -955,7 +955,7 @@ createBinding({
                 if (valuePrimitive) {
                     options.value(widget.value());
                 } else {
-                    options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
+                    options.value(widget.dataItems());
                 }
             }
         },
@@ -1004,7 +1004,7 @@ createBinding({
 				if (valuePrimitive) {
 					options.value(widget.value());
 				} else {
-					options.value(widget.dataItem ? widget.dataItem() : widget.dataItems());
+					options.value(widget.dataItem());
 				}
 			}
 		},
