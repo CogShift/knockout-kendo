@@ -41,9 +41,11 @@ createBinding({
 
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
+                    ensureDataExists(value, widget);
                     return getDataValueField(item, dataValueField);
                 });
             } else {
+                ensureDataExists(value, widget);
                 value = getDataValueField(value, dataValueField);
             }
 

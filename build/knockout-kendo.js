@@ -350,6 +350,23 @@ var getDataValueField = function (item, dataValueField) {
     return ko.utils.unwrapObservable(item[dataValueField]);
 };
 
+/**
+ * Ensures the value exists in the widget's datasource when valuePrimitive = false.  This prevents the widget
+ * from retrieving data from the server when it doesn't need to.
+ */
+var ensureDataExists = function(value, widget) {
+	var options = widget.options,
+		ds = widget.dataSource;
+
+	if (!options.valuePrimitive) {
+		var id = getDataValueField(value, options.dataValueField);
+		var item = id ? ds.get(id) : null;
+		if (id && !item) {
+			ds.add(value);
+		}
+	}
+};
+
 
 
 //library is in a closure, use this private variable to reduce size of minified file
@@ -436,9 +453,11 @@ createBinding({
 
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
+                    ensureDataExists(value, widget);
                     return getDataValueField(item, dataValueField);
                 });
             } else {
+                ensureDataExists(value, widget);
                 value = getDataValueField(value, dataValueField);
             }
 
@@ -532,9 +551,11 @@ createBinding({
 
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
+                    ensureDataExists(value, widget);
                     return getDataValueField(item, dataValueField);
                 });
             } else {
+                ensureDataExists(value, widget);
                 value = getDataValueField(value, dataValueField);
             }
 
@@ -634,9 +655,11 @@ createBinding({
 
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
+                    ensureDataExists(value, widget);
                     return getDataValueField(item, dataValueField);
                 });
             } else {
+                ensureDataExists(value, widget);
                 value = getDataValueField(value, dataValueField);
             }
 
@@ -982,9 +1005,11 @@ createBinding({
 
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
+                    ensureDataExists(value, widget);
                     return getDataValueField(item, dataValueField);
                 });
             } else {
+                ensureDataExists(value, widget);
                 value = getDataValueField(value, dataValueField);
             }
 
@@ -1031,9 +1056,11 @@ createBinding({
 
             if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
                 value = $.map(value, function(item) {
+            		ensureDataExists(value, widget);
                     return getDataValueField(item, dataValueField);
                 });
             } else {
+        		ensureDataExists(value, widget);
                 value = getDataValueField(value, dataValueField);
             }
 
