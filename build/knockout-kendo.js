@@ -354,18 +354,24 @@ var getDataValueField = function (item, dataValueField) {
  * Ensures the value exists in the widget's datasource when valuePrimitive = false.  This prevents the widget
  * from retrieving data from the server when it doesn't need to.
  */
-var ensureDataExists = function(value, widget) {
-	var options = widget.options,
-		ds = widget.dataSource;
+ var ensureDataExists = function(value, widget) {
+ 	var options = widget.options,
+ 		ds = widget.dataSource;
 
-	if (!options.valuePrimitive) {
-		var id = getDataValueField(value, options.dataValueField);
-		var item = id ? ds.get(id) : null;
-		if (id && !item) {
-			ds.add(value);
-		}
-	}
-};
+ 	if (!options.valuePrimitive) {
+ 		if (value instanceof Array) {
+ 			ko.utils.arrayForEach(value, function(item) {
+ 				ensureDataExists(item, widget);
+ 			});
+ 		} else {
+ 			var id = getDataValueField(value, options.dataValueField);
+ 			var item = id ? ds.get(id) : null;
+ 			if (id && !item) {
+ 				ds.add(value);
+ 			}
+ 		}
+ 	}
+ };
 
 
 
