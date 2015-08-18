@@ -429,8 +429,11 @@ createBinding({
                 valuePrimitive = widget.options.valuePrimitive;
 
             if (options.value) {
-                if (valuePrimitive) {
-                    options.value(widget.value());
+                var value = widget.value();
+                if(value === "" || value === undefined || value === null) {
+                    options.value(null);
+                } else if (valuePrimitive) {
+                    options.value(value);
                 } else {
                     options.value(widget.dataItem());
                 }
@@ -468,9 +471,10 @@ createBinding({
             }
 
             widget.value(value);
-        } 
+        }
     }
 });
+
 
 createBinding({
     name: "kendoButton",
@@ -527,8 +531,11 @@ createBinding({
                 valuePrimitive = widget.options.valuePrimitive;
 
             if (options.value) {
-                if (valuePrimitive) {
-                    options.value(widget.value());
+                var value = widget.value();
+                if(value === "" || value === undefined || value === null) {
+                    options.value(null);
+                } else if (valuePrimitive) {
+                    options.value(value);
                 } else {
                     options.value(widget.dataItem());
                 }
@@ -566,9 +573,10 @@ createBinding({
             }
 
             widget.value(value);
-        } 
+        }
     }
 });
+
 
 createBinding({
     name: "kendoDatePicker",
@@ -626,8 +634,11 @@ createBinding({
                 valuePrimitive = widget.options.valuePrimitive;
 
             if (options.value) {
-                if (valuePrimitive) {
-                    options.value(widget.value());
+                var value = widget.value();
+                if(value === "" || value === undefined || value === null) {
+                    options.value(null);
+                } else if (valuePrimitive) {
+                    options.value(value);
                 } else {
                     options.value(widget.dataItem());
                 }
@@ -670,9 +681,10 @@ createBinding({
             }
 
             widget.value(value);
-        } 
+        }
     }
 });
+
 
 createBinding({
     name: "kendoEditor",
@@ -686,6 +698,7 @@ createBinding({
     }
 });
 
+
 createBinding({
     name: "kendoGantt",
     defaultOption: DATA,
@@ -695,6 +708,7 @@ createBinding({
         }
     }
 });
+
 
 createBinding({
     name: "kendoGrid",
@@ -706,6 +720,7 @@ createBinding({
     },
     templates: ["rowTemplate", "altRowTemplate"]
 });
+
 
 createBinding({
     name: "kendoListView",
@@ -1024,6 +1039,7 @@ createBinding({
     }
 });
 
+
 createBinding({
 	name: "kendoSingleSelect",
 	events: {
@@ -1032,11 +1048,14 @@ createBinding({
 				valuePrimitive = widget.options.valuePrimitive;
 
 			if (options.value) {
-				if (valuePrimitive) {
-					options.value(widget.value());
-				} else {
-					options.value(widget.dataItem());
-				}
+				var value = widget.value();
+                if(value === "" || value === undefined || value === null) {
+                    options.value(null);
+                } else if (valuePrimitive) {
+                    options.value(value);
+                } else {
+                    options.value(widget.dataItem());
+                }
 			}
 		},
 		open: {
@@ -1074,6 +1093,7 @@ createBinding({
         }
 	}
 });
+
 
 var notificationHandler = function(type, value) {
     if (value || value === 0) {

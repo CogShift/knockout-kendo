@@ -6,11 +6,14 @@ createBinding({
 				valuePrimitive = widget.options.valuePrimitive;
 
 			if (options.value) {
-				if (valuePrimitive) {
-					options.value(widget.value());
-				} else {
-					options.value(widget.dataItem());
-				}
+				var value = widget.value();
+                if(value === "" || value === undefined || value === null) {
+                    options.value(null);
+                } else if (valuePrimitive) {
+                    options.value(value);
+                } else {
+                    options.value(widget.dataItem());
+                }
 			}
 		},
 		open: {
