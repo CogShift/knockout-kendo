@@ -7,6 +7,9 @@ createBinding({
     watch: {
         enabled: ENABLE,
         value: VALUE,
+        format: function(format) {
+	        this.options.format = format;
+        },
         max: function(newMax) {
             this.options.max = newMax;
             //make sure current value is still valid
