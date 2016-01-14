@@ -329,7 +329,7 @@ var getDataValueField = function (item, dataValueField) {
  	var options = widget.options,
  		ds = widget.dataSource;
 
- 	if (!options.valuePrimitive) {
+ 	if (!options.valuePrimitive && options.dataSource.options.serverFiltering) {
  		if (value instanceof Array) {
  			ko.utils.arrayForEach(value, function(item) {
  				ensureDataExists(item, widget);
