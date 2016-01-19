@@ -6,9 +6,18 @@ createBinding({
     },
     watch: {
         enabled: ENABLE,
-        value: VALUE,
-        format: function(format) {
+        value: function(value, options) {
+	        var format = unwrap(options.format);
+
+	        if (format) {
+		        this.options.format = format;
+	        }
+
+	        this.value(value);
+        },
+        format: function (format, options) {
 	        this.options.format = format;
+	        this.value(unwrap(options.value));
         },
         max: function(newMax) {
             this.options.max = newMax;

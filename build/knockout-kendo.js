@@ -358,7 +358,7 @@ var getDataValueField = function (item, dataValueField) {
  	var options = widget.options,
  		ds = widget.dataSource;
 
- 	if (!options.valuePrimitive && options.dataSource.options.serverFiltering) {
+    if (!options.valuePrimitive && options.dataSource && options.dataSource.options && options.dataSource.options.serverFiltering) {
  		if (value instanceof Array) {
  			ko.utils.arrayForEach(value, function(item) {
  				ensureDataExists(item, widget);
@@ -1130,9 +1130,18 @@ createBinding({
     },
     watch: {
         enabled: ENABLE,
-        value: VALUE,
-        format: function(format) {
+        value: function(value, options) {
+	        var format = unwrap(options.format);
+
+	        if (format) {
+		        this.options.format = format;
+	        }
+
+	        this.value(value);
+        },
+        format: function (format, options) {
 	        this.options.format = format;
+	        this.value(unwrap(options.value));
         },
         max: function(newMax) {
             this.options.max = newMax;
