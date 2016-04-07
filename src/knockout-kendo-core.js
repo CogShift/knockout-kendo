@@ -325,21 +325,66 @@ var getDataValueField = function (item, dataValueField) {
  * Ensures the value exists in the widget's datasource when valuePrimitive = false.  This prevents the widget
  * from retrieving data from the server when it doesn't need to.
  */
- var ensureDataExists = function(value, widget) {
+var addingToDataSource = false;
+var ensureDataExists = function (value, widget) {
+	if (addingToDataSource) {
+		return;
+	}
  	var options = widget.options,
  		ds = widget.dataSource;
+ 	try {
 
-    if (!options.valuePrimitive && options.dataSource && options.dataSource.options && options.dataSource.options.serverFiltering) {
- 		if (value instanceof Array) {
- 			ko.utils.arrayForEach(value, function(item) {
- 				ensureDataExists(item, widget);
- 			});
- 		} else {
- 			var id = getDataValueField(value, options.dataValueField);
- 			var item = id ? ds.get(id) : null;
- 			if (id && !item) {
- 				ds.add(value);
+ 		if (!options.valuePrimitive && options.dataSource && options.dataSource.options && options.dataSource.options.serverFiltering) {
+ 			if (value instanceof Array) {
+ 				ko.utils.arrayForEach(value, function (item) {
+ 					ensureDataExists(item, widget);
+ 				});
+ 			} else {
+ 				var id = getDataValueField(value, options.dataValueField);
+ 				var found = false;
+
+ 				if (id === null || id === undefined) {
+ 					return;
+ 				}
+
+ 				for (var i = 0; i < ds._data.length; i++) {
+ 					var item = ds._data[i];
+ 					if (id === getDataValueField(item, options.dataValueField)) {
+ 						found = true;
+ 						break;
+ 					}
+ 				}
+
+ 				if (!found) {
+					 addingToDataSource = true;
+					 ds.add(value);
+ 					 addingToDataSource = false;
+				 }
  			}
  		}
- 	}
+ 	} catch (e) {
+		 addingToDataSource = false;
+		 throw e;
+	 }
  };
+
+/*
+* Sets the value of a list based widget
+*/
+ var setListValue = function (widget, value) {
+    var dataValueField = widget.options.dataValueField;
+
+	value = ko.utils.unwrapObservable(value);
+
+	if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
+		value = $.map(value, function (item) {
+			ensureDataExists(value, widget);
+			return getDataValueField(item, dataValueField);
+		});
+	} else {
+		ensureDataExists(value, widget);
+		value = getDataValueField(value, dataValueField);
+	}
+
+	widget.value(value);
+};

@@ -16,6 +16,9 @@ createBinding({
                 }
             }
         },
+        dataBound: function(options, event) {
+        	setListValue(event.sender, ko.utils.unwrapObservable(options.value));
+        },
         open: {
             writeTo: ISOPEN,
             value: true
@@ -32,22 +35,7 @@ createBinding({
             ko.kendo.setDataSource(this, value);
         },
         value: function(value) {
-            var widget = this,
-                dataValueField = widget.options.dataValueField;
-
-            value = ko.utils.unwrapObservable(value);
-
-            if ((value instanceof Array || value instanceof kendo.data.ObservableArray) && value.length) {
-                value = $.map(value, function(item) {
-                    ensureDataExists(value, widget);
-                    return getDataValueField(item, dataValueField);
-                });
-            } else {
-                ensureDataExists(value, widget);
-                value = getDataValueField(value, dataValueField);
-            }
-
-            widget.value(value);
+	        setListValue(this, value);
         }
     }
 });
