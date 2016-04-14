@@ -1132,7 +1132,7 @@ createBinding({
             this.options.max = newMax;
             //make sure current value is still valid
             var value = this.value();
-            if ((value || value === 0) && value > newMax) {
+            if (newMax !== null && newMax !== undefined && (value || value === 0) && value > newMax) {
                 this.value(newMax);
             }
         },
@@ -1140,7 +1140,7 @@ createBinding({
             this.options.min = newMin;
             //make sure that current value is still valid
             var value = this.value();
-            if ((value || value === 0) && value < newMin ) {
+            if (newMin !== null && newMin !== undefined && (value || value === 0) && value < newMin) {
                 this.value(newMin);
             }
         }
