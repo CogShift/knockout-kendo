@@ -484,8 +484,11 @@ createBinding({
                 }
             }
         },
-        dataBound: function(options, event) {
-        	setListValue(event.sender, ko.utils.unwrapObservable(options.value));
+        dataBound: function (options, event) {
+	        var widget = event.sender;
+        	if (widget._state !== "filter") {
+        		setListValue(widget, ko.utils.unwrapObservable(options.value));
+	        }
         },
         open: {
             writeTo: ISOPEN,
@@ -574,8 +577,11 @@ createBinding({
                 }
             }
         },
-        dataBound: function(options, event) {
-        	setListValue(event.sender, ko.utils.unwrapObservable(options.value));
+        dataBound: function (options, event) {
+	        var widget = event.sender;
+        	if (widget._state !== "filter") {
+        		setListValue(widget, ko.utils.unwrapObservable(options.value));
+	        }
         },
         open: {
             writeTo: ISOPEN,
@@ -665,8 +671,11 @@ createBinding({
                 }
             }
         },
-        dataBound: function(options, event) {
-        	setListValue(event.sender, ko.utils.unwrapObservable(options.value));
+        dataBound: function (options, event) {
+	        var widget = event.sender;
+        	if (widget._state !== "filter") {
+        		setListValue(widget, ko.utils.unwrapObservable(options.value));
+	        }
         },
         open: {
             writeTo: ISOPEN,
@@ -1012,8 +1021,11 @@ createBinding({
                 }
             }
         },
-        dataBound: function(options, event) {
-        	setListValue(event.sender, ko.utils.unwrapObservable(options.value));
+        dataBound: function (options, event) {
+	        var widget = event.sender;
+        	if (widget._state !== "filter") {
+        		setListValue(widget, ko.utils.unwrapObservable(options.value));
+	        }
         },
         open: {
             writeTo: ISOPEN,
@@ -1055,8 +1067,11 @@ createBinding({
                 }
 			}
 		},
-		dataBound: function(options, event) {
-        	setListValue(event.sender, ko.utils.unwrapObservable(options.value));
+		dataBound: function (options, event) {
+	        var widget = event.sender;
+        	if (widget._state !== "filter") {
+        		setListValue(widget, ko.utils.unwrapObservable(options.value));
+	        }
         },
 		open: {
 			writeTo: ISOPEN,
